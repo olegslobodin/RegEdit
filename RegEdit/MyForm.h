@@ -24,8 +24,10 @@ namespace RegEdit {
 			//TODO: добавьте код конструктора
 			//
 		}
+
 		static void loadSubTree(TreeNode ^node);
 		void selectedKeyRead();
+		void editValue();
 
 	protected:
 		/// <summary>
@@ -93,6 +95,7 @@ namespace RegEdit {
 			this->dataGridView1->RowHeadersVisible = false;
 			this->dataGridView1->Size = System::Drawing::Size(393, 289);
 			this->dataGridView1->TabIndex = 1;
+			this->dataGridView1->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView1_CellDoubleClick);
 			// 
 			// Column_Name
 			// 
@@ -144,6 +147,10 @@ namespace RegEdit {
 
 	private: System::Void treeView1_AfterSelect(System::Object^  sender, System::Windows::Forms::TreeViewEventArgs^  e) {
 		selectedKeyRead();
+	}
+
+	private: System::Void dataGridView1_CellDoubleClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
+		editValue();
 	}
 	};
 }

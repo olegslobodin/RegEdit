@@ -1,4 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "MyForm.h"
+#include "Editor.h"
 #include <Windows.h>
 
 using namespace RegEdit;
@@ -67,6 +70,36 @@ void MyForm::selectedKeyRead()
 	dataGridView1->Rows->Clear();
 	for each(String^ name in key->GetValueNames())
 	{
-		dataGridView1->Rows->Add(name, key->GetValueKind(name), key->GetValue(name));
+		RegistryValueKind ^valueKind = key->GetValueKind(name);
+		Object ^value = key->GetValue(name);
+		String^ strValue = "";
+		switch (*valueKind)
+		{
+		case RegistryValueKind::MultiString:
+			for each (String^ str in (array<String^>^)value)
+			{
+				strValue += str + " ";
+			}
+			break;
+		case RegistryValueKind::Binary:
+			for each (Byte^ b in (array<Byte>^)value)
+			{
+				char buf[100];
+				_itoa(Convert::ToInt32(b), buf, 16),
+					strValue += gcnew String(buf) + " ";
+			}
+			break;
+		default:
+			strValue = value->ToString();
+		}
+		dataGridView1->Rows->Add(name, valueKind, strValue);
 	}
+}
+
+void MyForm::editValue()
+{
+	RegistryKey ^key = (RegistryKey^)treeView1->SelectedNode->Tag;
+	String ^name = dataGridView1->SelectedCells[0]->OwningRow->Cells[0]->Value->ToString();
+	Form^ editor = gcnew Editor(key, name);
+	editor->ShowDialog();
 }
