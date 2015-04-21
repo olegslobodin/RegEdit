@@ -70,32 +70,50 @@ void MyForm::selectedKeyRead()
 	dataGridView1->Rows->Clear();
 	for each(String^ name in key->GetValueNames())
 	{
-		RegistryValueKind ^valueKind = key->GetValueKind(name);
-		Object ^value = key->GetValue(name);
+
+		array<String^>^ temp = readKeyValue(key, name);
 		String^ strValue = "";
-		switch (*valueKind)
+		for each(String^ str in temp)
 		{
-		case RegistryValueKind::MultiString:
-			for each (String^ str in (array<String^>^)value)
-			{
-				strValue += str + " ";
-			}
-			break;
-		case RegistryValueKind::Binary:
-			for each (Byte^ b in (array<Byte>^)value)
-			{
-				char buf[100];
-				_itoa(Convert::ToInt32(b), buf, 16),
-					strValue += gcnew String(buf) + " ";
-			}
-			break;
-		default:
-			strValue = value->ToString();
+			strValue += str + " ";
 		}
+		RegistryValueKind ^valueKind = key->GetValueKind(name);
 		dataGridView1->Rows->Add(name, valueKind, strValue);
 	}
 }
 
+array<String^>^ MyForm::readKeyValue(RegistryKey ^key, String^ name)
+{
+	array<String^>^ temp = gcnew array<String^>(100);
+	temp[0] = "";
+	int count = 1;
+	RegistryValueKind ^valueKind = key->GetValueKind(name);
+	Object ^value = key->GetValue(name);
+	switch (*valueKind)
+	{
+	case RegistryValueKind::MultiString:
+		count = 0;
+		for each (String^ str in (array<String^>^)value)
+		{
+			temp[count++] = str;
+		}
+		break;
+	case RegistryValueKind::Binary:
+		for each (Byte^ b in (array<Byte>^)value)
+		{
+			char buf[100];
+			_itoa(Convert::ToInt32(b), buf, 16),
+				temp[0] += gcnew String(buf);
+		}
+		break;
+	default:
+		temp[0] = value->ToString();
+	}
+	array<String^>^ result = gcnew array<String^>(count);
+	for (int i = 0; i < count; i++)
+		result[i] = temp[i];
+	return result;
+}
 void MyForm::editValue()
 {
 	RegistryKey ^key = (RegistryKey^)treeView1->SelectedNode->Tag;

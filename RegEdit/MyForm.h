@@ -28,6 +28,7 @@ namespace RegEdit {
 		static void loadSubTree(TreeNode ^node);
 		void selectedKeyRead();
 		void editValue();
+	public: static array<String^>^ MyForm::readKeyValue(RegistryKey ^key, String^ name);
 
 	protected:
 		/// <summary>

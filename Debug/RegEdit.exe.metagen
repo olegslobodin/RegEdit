@@ -15,9 +15,6 @@ Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
-Class RegEdit.Editor: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
-  :System.Windows.Forms.Form
-    Void .ctor(Microsoft.Win32.RegistryKey, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class RegEdit.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
@@ -25,3 +22,19 @@ Class RegEdit.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     loadSubTree(TreeNode): PrivateScope, Public, Static, HideBySig
     selectedKeyRead(): PrivateScope, Public, HideBySig
     editValue(): PrivateScope, Public, HideBySig
+    readKeyValue(RegistryKey, String): PrivateScope, Public, Static, HideBySig
+Class RegEdit.Editor: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(Microsoft.Win32.RegistryKey, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Int32 base : Public
+    Boolean wrongSymbolPrinted : Public
+    System.String OldTextTB2 : Public
+    Microsoft.Win32.RegistryKey key : Public
+    System.String paramName : Public
+    System.String[] lines : Public
+  Methods:
+    initialize(): PrivateScope, Public, HideBySig
+    buildGUI(Boolean(HasFieldMarshal), Boolean(HasFieldMarshal), Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+    changeBase(Int32): PrivateScope, Public, HideBySig
+    saveChanges(): PrivateScope, Public, HideBySig
