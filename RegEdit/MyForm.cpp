@@ -118,6 +118,6 @@ void MyForm::editValue()
 {
 	RegistryKey ^key = (RegistryKey^)treeView1->SelectedNode->Tag;
 	String ^name = dataGridView1->SelectedCells[0]->OwningRow->Cells[0]->Value->ToString();
-	Form^ editor = gcnew Editor(key, name);
+	Form^ editor = gcnew Editor(key, name, this);
 	editor->ShowDialog();
 }

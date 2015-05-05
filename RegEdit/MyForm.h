@@ -80,6 +80,7 @@ namespace RegEdit {
 			this->treeView1->TabIndex = 0;
 			this->treeView1->BeforeExpand += gcnew System::Windows::Forms::TreeViewCancelEventHandler(this, &MyForm::treeView1_BeforeExpand);
 			this->treeView1->AfterSelect += gcnew System::Windows::Forms::TreeViewEventHandler(this, &MyForm::treeView1_AfterSelect);
+			this->treeView1->Click += gcnew System::EventHandler(this, &MyForm::treeView1_Click);
 			// 
 			// dataGridView1
 			// 
@@ -152,6 +153,9 @@ namespace RegEdit {
 
 	private: System::Void dataGridView1_CellDoubleClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 		editValue();
+	}
+	private: System::Void treeView1_Click(System::Object^  sender, System::EventArgs^  e) {
+		selectedKeyRead();
 	}
 	};
 }

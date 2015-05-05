@@ -25,10 +25,12 @@ Class RegEdit.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     readKeyValue(RegistryKey, String): PrivateScope, Public, Static, HideBySig
 Class RegEdit.Editor: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
-    Void .ctor(Microsoft.Win32.RegistryKey, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Microsoft.Win32.RegistryKey, System.String, RegEdit.MyForm): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    IntPtr refreshTable : Public
     Int32 base : Public
     Boolean wrongSymbolPrinted : Public
+    RegEdit.MyForm mainForm : Public
     System.String OldTextTB2 : Public
     Microsoft.Win32.RegistryKey key : Public
     System.String paramName : Public

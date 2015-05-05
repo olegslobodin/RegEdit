@@ -96,7 +96,7 @@ String^ baseConvert(String^ source, int old_base, int new_base)
 void Editor::saveChanges()
 {
 	lines = textBox2->Lines;
-	array<Byte^>^ bytes = gcnew array<Byte^>(lines[0]->Length / 2 + 1);
+	array<Byte>^ bytes = gcnew array<Byte>(lines[0]->Length / 2);
 
 	switch (key->GetValueKind(paramName))
 	{
@@ -114,11 +114,12 @@ void Editor::saveChanges()
 			}
 			bytes[i / 2] = (Byte)temp;
 		}
-		key->SetValue(paramName, bytes, RegistryValueKind::Binary);   //ÄÎĞÀÁÎÒÀÒÜ, à òàê âñ¸ îê :)
+		key->SetValue(paramName, (Object^)bytes);
 		break;
 	default:
 		key->SetValue(paramName, (Object^)lines[0], key->GetValueKind(paramName));
 	}
+	mainForm->selectedKeyRead();
 	this->Close();
 }
 

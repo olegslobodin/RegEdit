@@ -18,10 +18,11 @@ namespace RegEdit {
 	public ref class Editor : public System::Windows::Forms::Form
 	{
 	public:
-		Editor(RegistryKey ^key, String ^name)
+		Editor(RegistryKey ^key, String ^name, MyForm^ f)
 		{
 			this->key = key;
 			this->paramName = name;
+			mainForm = f;
 			initialize();
 		}
 
@@ -29,8 +30,10 @@ namespace RegEdit {
 		void buildGUI(bool multiline, bool showRadix, bool UpperCase);
 		void changeBase(int base);
 		void saveChanges();
+		void(*refreshTable)();
 		int base;
 		bool wrongSymbolPrinted;
+		MyForm^ mainForm;
 		String^ OldTextTB2;
 		RegistryKey^ key;
 		String^ paramName;
