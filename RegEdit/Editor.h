@@ -111,18 +111,18 @@ namespace RegEdit {
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(12, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(58, 13);
+			this->label1->Size = System::Drawing::Size(55, 13);
 			this->label1->TabIndex = 2;
-			this->label1->Text = L"Параметр";
+			this->label1->Text = L"Parameter";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(15, 52);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(55, 13);
+			this->label2->Size = System::Drawing::Size(34, 13);
 			this->label2->TabIndex = 3;
-			this->label2->Text = L"Значение";
+			this->label2->Text = L"Value";
 			// 
 			// button1
 			// 
@@ -131,7 +131,7 @@ namespace RegEdit {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 4;
-			this->button1->Text = L"Ок";
+			this->button1->Text = L"Ok";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &Editor::button1_Click);
 			// 
@@ -142,7 +142,7 @@ namespace RegEdit {
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(75, 23);
 			this->button2->TabIndex = 5;
-			this->button2->Text = L"Отмена";
+			this->button2->Text = L"Cancel";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &Editor::button2_Click);
 			// 
@@ -155,7 +155,7 @@ namespace RegEdit {
 			this->groupBox1->Size = System::Drawing::Size(154, 70);
 			this->groupBox1->TabIndex = 6;
 			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Система счисления";
+			this->groupBox1->Text = L"Radix";
 			this->groupBox1->Visible = false;
 			// 
 			// radioButton2
@@ -164,10 +164,10 @@ namespace RegEdit {
 			this->radioButton2->Checked = true;
 			this->radioButton2->Location = System::Drawing::Point(7, 43);
 			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(86, 17);
+			this->radioButton2->Size = System::Drawing::Size(63, 17);
 			this->radioButton2->TabIndex = 1;
 			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"Десятичная";
+			this->radioButton2->Text = L"Decimal";
 			this->radioButton2->UseVisualStyleBackColor = true;
 			// 
 			// radioButton1
@@ -175,9 +175,9 @@ namespace RegEdit {
 			this->radioButton1->AutoSize = true;
 			this->radioButton1->Location = System::Drawing::Point(7, 19);
 			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(127, 17);
+			this->radioButton1->Size = System::Drawing::Size(44, 17);
 			this->radioButton1->TabIndex = 0;
-			this->radioButton1->Text = L"Шестнадцатиричная";
+			this->radioButton1->Text = L"Hex";
 			this->radioButton1->UseVisualStyleBackColor = true;
 			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &Editor::radioButton1_CheckedChanged);
 			// 

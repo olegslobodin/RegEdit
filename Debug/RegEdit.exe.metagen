@@ -1,3 +1,4 @@
+  RegEdit.addingWindow.resources - Embedded, ContainedInManifestFile, 
   RegEdit.Editor.resources - Embedded, ContainedInManifestFile, 
   RegEdit.MyForm.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
@@ -18,11 +19,26 @@ Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c5619
 Class RegEdit.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.Windows.Forms.TreeView treeView1 : Public
   Methods:
     loadSubTree(TreeNode): PrivateScope, Public, Static, HideBySig
     selectedKeyRead(): PrivateScope, Public, HideBySig
     editValue(): PrivateScope, Public, HideBySig
+    addValue(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
+    removeValue(): PrivateScope, Public, HideBySig
     readKeyValue(RegistryKey, String): PrivateScope, Public, Static, HideBySig
+Class RegEdit.addingWindow: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(System.Windows.Forms.TreeNode, Boolean, RegEdit.MyForm): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    RegEdit.MyForm f : Public
+    System.Windows.Forms.TreeNode node : Public
+    Microsoft.Win32.RegistryKey key : Public
+    Boolean itIsSection : Public
+  Methods:
+    initialize(): PrivateScope, Public, HideBySig
+    add(): PrivateScope, Public, HideBySig
 Class RegEdit.Editor: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(Microsoft.Win32.RegistryKey, System.String, RegEdit.MyForm): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName

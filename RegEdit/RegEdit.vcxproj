@@ -76,10 +76,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="addingWindow.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="MyForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="addingWindow.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Editor.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -88,6 +92,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="addingWindow.resx">
+      <DependentUpon>addingWindow.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor.resx">
       <DependentUpon>Editor.h</DependentUpon>
     </EmbeddedResource>

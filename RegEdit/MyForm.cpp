@@ -2,6 +2,7 @@
 
 #include "MyForm.h"
 #include "Editor.h"
+#include "addingWindow.h"
 #include <Windows.h>
 
 using namespace RegEdit;
@@ -48,7 +49,7 @@ void MyForm::loadTree()
 void MyForm::loadSubTree(TreeNode ^node)
 {
 	if (node->GetNodeCount(false) > 0)
-		return;
+		node->Nodes->Clear();
 	RegistryKey ^key = (RegistryKey^)node->Tag;
 	array<String^>^ a = key->GetSubKeyNames();
 	for each(String^ name in a)
@@ -64,6 +65,8 @@ void MyForm::loadSubTree(TreeNode ^node)
 
 void MyForm::selectedKeyRead()
 {
+	if (!treeView1->SelectedNode)
+		return;
 	RegistryKey ^key = (RegistryKey^)treeView1->SelectedNode->Tag;
 	if (!key)
 		return;
@@ -114,10 +117,23 @@ array<String^>^ MyForm::readKeyValue(RegistryKey ^key, String^ name)
 		result[i] = temp[i];
 	return result;
 }
+
 void MyForm::editValue()
 {
 	RegistryKey ^key = (RegistryKey^)treeView1->SelectedNode->Tag;
 	String ^name = dataGridView1->SelectedCells[0]->OwningRow->Cells[0]->Value->ToString();
 	Form^ editor = gcnew Editor(key, name, this);
 	editor->ShowDialog();
+}
+
+void MyForm::addValue(bool itIsSection)
+{
+	TreeNode^ node = treeView1->SelectedNode;
+	Form^ adder = gcnew addingWindow(node, itIsSection, this);
+	adder->ShowDialog();
+}
+
+void MyForm::removeValue()
+{
+
 }

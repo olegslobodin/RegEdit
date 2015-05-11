@@ -96,7 +96,8 @@ String^ baseConvert(String^ source, int old_base, int new_base)
 void Editor::saveChanges()
 {
 	lines = textBox2->Lines;
-	array<Byte>^ bytes = gcnew array<Byte>(lines[0]->Length / 2);
+	String^ str0 = lines[0];
+	array<Byte>^ bytes = gcnew array<Byte>(str0->Length / 2);
 
 	switch (key->GetValueKind(paramName))
 	{
@@ -104,20 +105,22 @@ void Editor::saveChanges()
 		key->SetValue(paramName, (Object^)lines, RegistryValueKind::MultiString);
 		break;
 	case RegistryValueKind::Binary:
-		for (int i = 0; i < lines[0]->Length; i += 2)
+		for (int i = 0; i < str0->Length; i += 2)
 		{
-			int temp = myAtoi(lines[0][i]);
-			if (i + 1 < lines[0]->Length)
+			int temp = myAtoi(str0[i]);
+			if (i + 1 < str0->Length)
 			{
 				temp *= 16;
-				temp += myAtoi(lines[0][i + 1]);
+				temp += myAtoi(str0[i + 1]);
 			}
 			bytes[i / 2] = (Byte)temp;
 		}
 		key->SetValue(paramName, (Object^)bytes);
 		break;
 	default:
-		key->SetValue(paramName, (Object^)lines[0], key->GetValueKind(paramName));
+		if (groupBox1->Visible && radioButton1->Checked)
+			str0 = baseConvert(str0, 16, 10);
+		key->SetValue(paramName, (Object^)str0, key->GetValueKind(paramName));
 	}
 	mainForm->selectedKeyRead();
 	this->Close();
