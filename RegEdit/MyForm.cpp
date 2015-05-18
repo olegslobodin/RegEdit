@@ -4,11 +4,28 @@
 #include "Editor.h"
 #include "addingWindow.h"
 #include <Windows.h>
+#include <winreg.h>
 
 using namespace RegEdit;
 
+HANDLE hEvent;
+
+void testMsg()
+{
+	while (1)
+	{
+		WaitForSingleObject(hEvent, INFINITE);
+		Windows::Forms::MessageBox::Show("Event activated!");
+	}
+}
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+
+	/*hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	Thread^ hPhilThreadA = gcnew Thread(gcnew ThreadStart(&testMsg));
+	hPhilThreadA->Start();*/
+
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	Application::Run(gcnew MyForm);
@@ -70,6 +87,7 @@ void MyForm::selectedKeyRead()
 	RegistryKey ^key = (RegistryKey^)treeView1->SelectedNode->Tag;
 	if (!key)
 		return;
+
 	dataGridView1->Rows->Clear();
 	for each(String^ name in key->GetValueNames())
 	{
@@ -133,7 +151,63 @@ void MyForm::addValue(bool itIsSection)
 	adder->ShowDialog();
 }
 
-void MyForm::removeValue()
+void MyForm::removeValue(bool isItSection)
 {
+	TreeNode^ node = treeView1->SelectedNode;
+	if (isItSection)
+	{
+		TreeNode^ parent = node->Parent;
+		RegistryKey ^key = (RegistryKey^)parent->Tag;
+		try
+		{
+			key->DeleteSubKeyTree(node->Text);
+		}
+		catch (System::UnauthorizedAccessException^)
+		{
+			try
+			{
+				RegistryKey^ parentKey = (RegistryKey^)parent->Tag;
+				key = parentKey->OpenSubKey(node->Text, true);
+				key->DeleteSubKey(node->Text);
+			}
+			catch (Exception^ e)
+			{
+				MessageBox::Show(e->Message);
+			}
+		}
+		loadSubTree(parent);
+		for each(TreeNode ^childNode in parent->Nodes)
+			loadSubTree(childNode);
+	}
+	else
+	{
+		RegistryKey ^key = (RegistryKey^)node->Tag;
+		key->DeleteValue(dataGridView1->SelectedCells[0]->OwningRow->Cells[0]->Value->ToString());
+		selectedKeyRead();		//refresh table
+	}
+}
 
+void MyForm::setMonitor()
+{
+	int subKeysCount = 0;
+	for each (TreeNode^ node in treeView1->Nodes)
+	{
+		subKeysCount += node->Nodes->Count;
+	}
+
+	int i = 0;
+	for each (TreeNode^ node in treeView1->Nodes)
+	{
+		for each (TreeNode^ subNode in node->Nodes)
+		{
+			DWORD  dwFilter = REG_NOTIFY_CHANGE_NAME |
+				REG_NOTIFY_CHANGE_ATTRIBUTES |
+				REG_NOTIFY_CHANGE_LAST_SET |
+				REG_NOTIFY_CHANGE_SECURITY;
+			RegistryKey^ key = (RegistryKey^)subNode->Tag;
+			HKEY hKey = (HKEY)(key)->Handle->DangerousGetHandle().ToPointer();
+			//RegNotifyChangeKeyValue(hKey, true, dwFilter, hEvent, true);
+			i++;
+		}
+	}
 }

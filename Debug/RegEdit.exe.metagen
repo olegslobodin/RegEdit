@@ -20,13 +20,16 @@ Class RegEdit.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    System.Threading.Thread monitor : Public
     System.Windows.Forms.TreeView treeView1 : Public
   Methods:
+    loadTree(): PrivateScope, Public, HideBySig
+    setMonitor(): PrivateScope, Public, HideBySig
     loadSubTree(TreeNode): PrivateScope, Public, Static, HideBySig
     selectedKeyRead(): PrivateScope, Public, HideBySig
     editValue(): PrivateScope, Public, HideBySig
     addValue(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
-    removeValue(): PrivateScope, Public, HideBySig
+    removeValue(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig
     readKeyValue(RegistryKey, String): PrivateScope, Public, Static, HideBySig
 Class RegEdit.addingWindow: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form

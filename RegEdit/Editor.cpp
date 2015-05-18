@@ -96,7 +96,7 @@ String^ baseConvert(String^ source, int old_base, int new_base)
 void Editor::saveChanges()
 {
 	lines = textBox2->Lines;
-	String^ str0 = lines[0];
+	String^ str0 = (lines->Length == 0) ? "" : lines[0];
 	array<Byte>^ bytes = gcnew array<Byte>(str0->Length / 2);
 
 	switch (key->GetValueKind(paramName))

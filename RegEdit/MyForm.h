@@ -8,6 +8,7 @@ namespace RegEdit {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Threading;
 	using namespace Microsoft::Win32;
 
 	/// <summary>
@@ -21,12 +22,17 @@ namespace RegEdit {
 		{
 			InitializeComponent();
 		}
+	private: System::Windows::Forms::ToolStripMenuItem^  removeSectionToolStripMenuItem;
+	public:
 
+		Thread^ monitor;
+		void loadTree();
+		void setMonitor();
 		static void loadSubTree(TreeNode ^node);
 		void selectedKeyRead();
 		void editValue();
 		void addValue(bool itIsSection);
-		void removeValue();
+		void removeValue(bool itIsSection);
 	public: static array<String^>^ MyForm::readKeyValue(RegistryKey ^key, String^ name);
 
 	protected:
@@ -82,6 +88,7 @@ namespace RegEdit {
 			this->addToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->addSectionStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->removeToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->removeSectionToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->TableMenuStrip->SuspendLayout();
 			this->SuspendLayout();
@@ -135,40 +142,48 @@ namespace RegEdit {
 			// 
 			// TableMenuStrip
 			// 
-			this->TableMenuStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
+			this->TableMenuStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
 				this->editToolStripMenuItem,
-					this->addToolStripMenuItem, this->addSectionStripMenuItem, this->removeToolStripMenuItem
+					this->addToolStripMenuItem, this->addSectionStripMenuItem, this->removeToolStripMenuItem, this->removeSectionToolStripMenuItem
 			});
 			this->TableMenuStrip->Name = L"TableMenuStrip";
-			this->TableMenuStrip->Size = System::Drawing::Size(154, 92);
+			this->TableMenuStrip->Size = System::Drawing::Size(175, 114);
 			this->TableMenuStrip->Opened += gcnew System::EventHandler(this, &MyForm::TableMenuStrip_Opened);
 			// 
 			// editToolStripMenuItem
 			// 
 			this->editToolStripMenuItem->Name = L"editToolStripMenuItem";
-			this->editToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->editToolStripMenuItem->Size = System::Drawing::Size(174, 22);
 			this->editToolStripMenuItem->Text = L"Edit";
 			this->editToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::editToolStripMenuItem_Click);
 			// 
 			// addToolStripMenuItem
 			// 
 			this->addToolStripMenuItem->Name = L"addToolStripMenuItem";
-			this->addToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->addToolStripMenuItem->Size = System::Drawing::Size(174, 22);
 			this->addToolStripMenuItem->Text = L"Add Parameter";
 			this->addToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::addToolStripMenuItem_Click);
 			// 
 			// addSectionStripMenuItem
 			// 
 			this->addSectionStripMenuItem->Name = L"addSectionStripMenuItem";
-			this->addSectionStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->addSectionStripMenuItem->Size = System::Drawing::Size(174, 22);
 			this->addSectionStripMenuItem->Text = L"Add Section";
 			this->addSectionStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::addSectionStripMenuItem_Click);
 			// 
 			// removeToolStripMenuItem
 			// 
 			this->removeToolStripMenuItem->Name = L"removeToolStripMenuItem";
-			this->removeToolStripMenuItem->Size = System::Drawing::Size(153, 22);
-			this->removeToolStripMenuItem->Text = L"Remove";
+			this->removeToolStripMenuItem->Size = System::Drawing::Size(174, 22);
+			this->removeToolStripMenuItem->Text = L"Remove Parameter";
+			this->removeToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::removeToolStripMenuItem_Click);
+			// 
+			// removeSectionToolStripMenuItem
+			// 
+			this->removeSectionToolStripMenuItem->Name = L"removeSectionToolStripMenuItem";
+			this->removeSectionToolStripMenuItem->Size = System::Drawing::Size(174, 22);
+			this->removeSectionToolStripMenuItem->Text = L"Remove Section";
+			this->removeSectionToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::removeSectionToolStripMenuItem_Click);
 			// 
 			// MyForm
 			// 
@@ -186,18 +201,15 @@ namespace RegEdit {
 
 		}
 #pragma endregion
-		void loadTree();
 
 	private: System::Void MyForm_Shown(System::Object^  sender, System::EventArgs^  e) {
 		loadTree();
+		setMonitor();
 	}
 
 	private: System::Void treeView1_BeforeExpand(System::Object^  sender, System::Windows::Forms::TreeViewCancelEventArgs^  e) {
 		for each(TreeNode ^childNode in e->Node->Nodes)
-		{
-			if (childNode->Nodes->Count == 0)
-				loadSubTree(childNode);
-		}
+			loadSubTree(childNode);
 	}
 
 	private: System::Void treeView1_AfterSelect(System::Object^  sender, System::Windows::Forms::TreeViewEventArgs^  e) {
@@ -242,8 +254,17 @@ namespace RegEdit {
 	private: System::Void addToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		addValue(false);
 	}
+
 	private: System::Void addSectionStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		addValue(true);
+	}
+
+	private: System::Void removeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+		removeValue(false);
+	}
+
+	private: System::Void removeSectionToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+		removeValue(true);
 	}
 	};
 }
