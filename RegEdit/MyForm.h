@@ -25,9 +25,7 @@ namespace RegEdit {
 	private: System::Windows::Forms::ToolStripMenuItem^  removeSectionToolStripMenuItem;
 	public:
 
-		Thread^ monitor;
 		void loadTree();
-		void setMonitor();
 		static void loadSubTree(TreeNode ^node);
 		void selectedKeyRead();
 		void editValue();
@@ -204,7 +202,6 @@ namespace RegEdit {
 
 	private: System::Void MyForm_Shown(System::Object^  sender, System::EventArgs^  e) {
 		loadTree();
-		setMonitor();
 	}
 
 	private: System::Void treeView1_BeforeExpand(System::Object^  sender, System::Windows::Forms::TreeViewCancelEventArgs^  e) {

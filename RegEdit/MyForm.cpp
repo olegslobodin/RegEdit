@@ -8,24 +8,8 @@
 
 using namespace RegEdit;
 
-HANDLE hEvent;
-
-void testMsg()
-{
-	while (1)
-	{
-		WaitForSingleObject(hEvent, INFINITE);
-		Windows::Forms::MessageBox::Show("Event activated!");
-	}
-}
-
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-
-	/*hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	Thread^ hPhilThreadA = gcnew Thread(gcnew ThreadStart(&testMsg));
-	hPhilThreadA->Start();*/
-
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	Application::Run(gcnew MyForm);
@@ -160,7 +144,7 @@ void MyForm::removeValue(bool isItSection)
 		RegistryKey ^key = (RegistryKey^)parent->Tag;
 		try
 		{
-			key->DeleteSubKeyTree(node->Text);
+			key->DeleteSubKeyTree(node->Text, false);
 		}
 		catch (System::UnauthorizedAccessException^)
 		{
@@ -168,7 +152,7 @@ void MyForm::removeValue(bool isItSection)
 			{
 				RegistryKey^ parentKey = (RegistryKey^)parent->Tag;
 				key = parentKey->OpenSubKey(node->Text, true);
-				key->DeleteSubKey(node->Text);
+				key->DeleteSubKeyTree(node->Text, false);
 			}
 			catch (Exception^ e)
 			{
@@ -182,32 +166,17 @@ void MyForm::removeValue(bool isItSection)
 	else
 	{
 		RegistryKey ^key = (RegistryKey^)node->Tag;
-		key->DeleteValue(dataGridView1->SelectedCells[0]->OwningRow->Cells[0]->Value->ToString());
-		selectedKeyRead();		//refresh table
-	}
-}
-
-void MyForm::setMonitor()
-{
-	int subKeysCount = 0;
-	for each (TreeNode^ node in treeView1->Nodes)
-	{
-		subKeysCount += node->Nodes->Count;
-	}
-
-	int i = 0;
-	for each (TreeNode^ node in treeView1->Nodes)
-	{
-		for each (TreeNode^ subNode in node->Nodes)
+		try
 		{
-			DWORD  dwFilter = REG_NOTIFY_CHANGE_NAME |
-				REG_NOTIFY_CHANGE_ATTRIBUTES |
-				REG_NOTIFY_CHANGE_LAST_SET |
-				REG_NOTIFY_CHANGE_SECURITY;
-			RegistryKey^ key = (RegistryKey^)subNode->Tag;
-			HKEY hKey = (HKEY)(key)->Handle->DangerousGetHandle().ToPointer();
-			//RegNotifyChangeKeyValue(hKey, true, dwFilter, hEvent, true);
-			i++;
+			key->DeleteValue(dataGridView1->SelectedCells[0]->OwningRow->Cells[0]->Value->ToString());
 		}
+		catch (Exception^ e)
+		{
+			TreeNode^ parent = node->Parent;
+			RegistryKey^ parentKey = (RegistryKey^)parent->Tag;
+			key = parentKey->OpenSubKey(node->Text, true);
+			key->DeleteValue(dataGridView1->SelectedCells[0]->OwningRow->Cells[0]->Value->ToString());
+		}
+		selectedKeyRead();		//refresh table
 	}
 }

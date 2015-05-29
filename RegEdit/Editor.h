@@ -30,7 +30,6 @@ namespace RegEdit {
 		void buildGUI(bool multiline, bool showRadix, bool UpperCase);
 		void changeBase(int base);
 		void saveChanges();
-		void(*refreshTable)();
 		int base;
 		bool wrongSymbolPrinted;
 		MyForm^ mainForm;

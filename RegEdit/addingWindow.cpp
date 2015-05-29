@@ -21,7 +21,7 @@ void addingWindow::add()
 		{
 			key->CreateSubKey(textBox1->Text);
 		}
-		catch (System::UnauthorizedAccessException^ e)
+		catch (System::Exception^ e)
 		{
 			try
 			{
@@ -71,7 +71,25 @@ void addingWindow::add()
 		if (radioButton6->Checked)
 			type = RegistryValueKind::ExpandString;
 
-		key->SetValue(textBox1->Text, value, type);
+		try
+		{
+			key->SetValue(textBox1->Text, value, type);
+		}
+		catch (System::UnauthorizedAccessException^ e)
+		{
+			try
+			{
+				RegistryKey^ parentKey = (RegistryKey^)node->Parent->Tag;
+				key = parentKey->OpenSubKey(node->Text, true);
+				key->SetValue(textBox1->Text, value, type);
+			}
+			catch (Exception^ e)
+			{
+				MessageBox::Show(e->Message);
+			}
+		}
+
+
 		f->selectedKeyRead();			//refresh table
 	}
 	this->Close();

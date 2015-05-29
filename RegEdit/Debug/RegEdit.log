@@ -1,16 +1,17 @@
-﻿Сборка начата 18.05.2015 18:22:20.
-     1>Проект "C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\RegEdit\RegEdit.vcxproj" в узле 2 (целевые объекты Build).
+﻿Build started 29.05.2015 20:01:48.
+     1>Project "C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\RegEdit\RegEdit.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          D:\must_have\Microsoft Visual Studio 2014\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\\" /AI"C:\Program Files (x86)\Windows Kits\8.1\References\CommonConfiguration\Neutral" /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\\" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib MyForm.cpp
          MyForm.cpp
+     1>MyForm.cpp(173): warning C4101: 'e' : unreferenced local variable
        Link:
-         D:\must_have\Microsoft Visual Studio 2014\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\Debug\RegEdit.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\RegEdit.addingWindow.resources /ASSEMBLYRESOURCE:Debug\RegEdit.Editor.resources /ASSEMBLYRESOURCE:Debug\RegEdit.MyForm.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\Debug\RegEdit.pdb" /ASSEMBLYDEBUG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\addingWindow.obj
+         D:\must_have\Microsoft Visual Studio 2014\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\Debug\RegEdit.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /ASSEMBLYRESOURCE:Debug\RegEdit.addingWindow.resources /ASSEMBLYRESOURCE:Debug\RegEdit.Editor.resources /ASSEMBLYRESOURCE:Debug\RegEdit.MyForm.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\Debug\RegEdit.pdb" /ASSEMBLYDEBUG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\addingWindow.obj
          Debug\Editor.obj
          Debug\MyForm.obj
          "Debug\.NETFramework,Version=v4.5.AssemblyAttributes.obj"
          RegEdit.vcxproj -> C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\Debug\RegEdit.exe
-     1>Сборка проекта "C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\RegEdit\RegEdit.vcxproj" завершена (целевые объекты Build).
+     1>Done Building Project "C:\Users\Олег\documents\visual studio 2013\Projects\RegEdit\RegEdit\RegEdit.vcxproj" (Build target(s)).
 
-Сборка успешно завершена.
+Build succeeded.
 
-Затраченное время: 00:00:01.90
+Time Elapsed 00:00:07.14
